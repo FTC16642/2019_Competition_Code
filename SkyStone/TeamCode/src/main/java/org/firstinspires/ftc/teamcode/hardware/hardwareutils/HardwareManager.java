@@ -14,7 +14,8 @@ public class HardwareManager {
     public DcMotor leftFrontDrive, rightFrontDrive, leftRearDrive, rightRearDrive;
 
     //Claw Servos
-    public CRServo elbow, wrist, arm;
+    public Servo elbow, wrist;
+    public DcMotor lift;
 
     //Pusher Servo
     public Servo pusher;
@@ -22,6 +23,9 @@ public class HardwareManager {
     //Intake Motors
     public DcMotor intakeLeft;
     public DcMotor intakeRight;
+
+    //Hook Servo
+    public Servo hook;
 
     public HardwareManager(HardwareMap hardwareMap)
     {
@@ -45,9 +49,9 @@ public class HardwareManager {
 
     private void initClaw()
     {
-        elbow = hardwareMap.get(CRServo.class, HardwareNames.elbow);
-        arm = hardwareMap.get(CRServo.class, HardwareNames.arm);
-        wrist = hardwareMap.get(CRServo.class, HardwareNames.wrist);    
+        elbow = hardwareMap.get(Servo.class, HardwareNames.elbow);
+        lift = hardwareMap.get(DcMotor.class, HardwareNames.lift);
+        wrist = hardwareMap.get(Servo.class, HardwareNames.wrist);
     }
 
     private void initPusher()

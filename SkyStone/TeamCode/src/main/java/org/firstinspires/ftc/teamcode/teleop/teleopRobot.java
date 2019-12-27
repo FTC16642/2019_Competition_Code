@@ -51,7 +51,7 @@ public class teleopRobot extends OpMode {
     }
 
     private Subsystem setUpClaw() {
-      return new Claw(secondaryController, hardware.elbow, hardware.wrist, hardware.arm);
+      return new Claw(secondaryController, hardware.elbow, hardware.wrist, hardware.lift);
     }
     private Subsystem setUpPusher()
     {

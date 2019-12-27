@@ -18,7 +18,7 @@ public class Mecanum implements Subsystem {
     double frd = magnitude * Math.sin(robotAngle) - rightX;
     double bld = magnitude * Math.sin(robotAngle) + rightX;
     double brd = magnitude * Math.cos(robotAngle) - rightX;
-    double max = Math.max(Math.abs(fld), Math.abs(frd), Math.abs(bld), Math.abs(brd));
+    double max = Math.max(Math.max(Math.abs(fld), Math.abs(frd)), Math.max(Math.abs(bld), Math.abs(brd)));
     if (max>1){
         fld = fld/max;
         frd = frd/max;

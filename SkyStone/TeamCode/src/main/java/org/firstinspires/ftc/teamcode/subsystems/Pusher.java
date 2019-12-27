@@ -9,18 +9,18 @@ public class Pusher implements Subsystem{
     private GamepadWrapper secondaryController;
     private Servo pusher;
 
-    public Claw(GamepadWrapper secondaryController, Servo pusher){
+    public Pusher(GamepadWrapper secondaryController, Servo pusher){
         this.secondaryController = secondaryController;
         this.pusher = pusher;
     }
 
     //Pusher is Active
-    private pusherActive(){
+    private void pusherActive(){
         pusher.setPosition(.5);
     }
 
     //Pusher is Retracted
-    private pusherRetract(){
+    private void pusherRetract(){
         pusher.setPosition(0);
     }
 

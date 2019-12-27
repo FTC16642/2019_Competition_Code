@@ -9,19 +9,19 @@ public class Hook implements Subsystem{
     private GamepadWrapper secondaryController;
     private Servo hook;
 
-    public Claw(GamepadWrapper secondaryController, Servo hook){
+    public Hook(GamepadWrapper secondaryController, Servo hook){
         this.secondaryController = secondaryController;
         this.hook = hook;
     }
 
     //Pusher is Active
-    private hookActive(){
-        pusher.setPosition(.5);
+    private void hookActive(){
+        hook.setPosition(.5);
     }
 
     //Pusher is Retracted
-    private hookRetract(){
-        pusher.setPosition(0);
+    private void hookRetract(){
+        hook.setPosition(0);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Hook implements Subsystem{
         boolean dPadDown = secondaryController.getDPadDown();
 
 
-        if (buttonA){
+        if (buttonX){
             if (dPadDown){
                 hookActive();
             }

@@ -10,20 +10,20 @@ public class Intake implements Subsystem{
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
 
-    public Claw(GamepadWrapper driveController, DcMotor intakeLeft, DcMotor intakeRight){
+    public Intake(GamepadWrapper driveController, DcMotor intakeLeft, DcMotor intakeRight){
         this.driveController = driveController;
         this.intakeLeft = intakeLeft;
         this.intakeRight = intakeRight;
     }
 
     //Intake is Active
-    private intakeActive(double speed){
+    private void intakeActive(double speed){
         intakeLeft.setPower(speed);
         intakeRight.setPower(speed);
     }
 
     //Intake is Stopped
-    private intakeStop(){
+    private void intakeStop(){
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
     }
