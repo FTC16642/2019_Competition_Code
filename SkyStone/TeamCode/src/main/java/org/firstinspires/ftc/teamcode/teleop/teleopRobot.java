@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Pusher;
 import org.firstinspires.ftc.teamcode.subsystems.Mecanum;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Hook;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager;
 
@@ -40,7 +41,8 @@ public class teleopRobot extends OpMode {
         Subsystem claw = setUpClaw();
         Subsystem pusher = setUpPusher();
         Subsystem intake = setUpIntake();
-        subsystems = new SubsystemManager(drive, claw, pusher, intake);
+        Subsystem hook = setUpHook();
+        subsystems = new SubsystemManager(drive, claw, pusher, intake, hook);
     }
     @Override
     public void loop() {
@@ -54,6 +56,10 @@ public class teleopRobot extends OpMode {
     private Subsystem setUpPusher()
     {
         return new Pusher(secondaryController, hardware.pusher);
+    }
+    private Subsystem setUpHook()
+    {
+        return new Hook(secondaryController, hardware.hook);
     }
     private Subsystem setUpIntake()
     {

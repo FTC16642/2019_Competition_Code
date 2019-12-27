@@ -3,15 +3,17 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Claw implements Subsystem{
 
     private GamepadWrapper secondaryController;
-    private CRServo elbow, wrist, arm;
+    private CRServo elbow, wrist;
+    private DcMotor lift;
 
-    public Claw(GamepadWrapper secondaryController, CRServo elbow, CRServo wrist, CRServo arm){
+    public Claw(GamepadWrapper secondaryController, CRServo elbow, CRServo wrist, DcMotor lift){
         this.secondaryController = secondaryController;
-        this.arm = arm;
+        this.lift = lift;
         this.elbow = elbow;
         this.wrist = wrist;
     }
@@ -19,28 +21,28 @@ public class Claw implements Subsystem{
     //Write Out the Low Position Sequence with Sleeps
     private clawLow(){
         elbow.setPosition(0);
-        arm.setPosition(0);
+        lift.setPower(0);
         wrist.setPosition(0);
     }
 
     //Write Out the Med Position Sequence with Sleeps
     private clawMed(){
         elbow.setPosition(.5);
-        arm.setPosition(.5);
+        lift.setPower(.5);
         wrist.setPosition(.5);
     }
     
     //Write Out the High Position Sequence with Sleeps
     private clawHigh(){
         elbow.setPosition(1);
-        arm.setPosition(1);
+        lift.setPower(1);
         wrist.setPosition(1);
     }
     
     //Write Out the Reset Sequence with Sleeps
     private clawReset(){
         elbow.setPosition(.3);
-        arm.setPosition(.6);
+        lift.setPower(.6);
         wrist.setPosition(.9);
     }
 

@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class Claw implements Subsystem{
+public class Intake implements Subsystem{
 
     private GamepadWrapper driveController;
     private DcMotor intakeLeft;

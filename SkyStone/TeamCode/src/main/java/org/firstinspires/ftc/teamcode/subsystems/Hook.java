@@ -4,23 +4,23 @@ import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Pusher implements Subsystem{
+public class Hook implements Subsystem{
 
     private GamepadWrapper secondaryController;
-    private Servo pusher;
+    private Servo hook;
 
-    public Claw(GamepadWrapper secondaryController, Servo pusher){
+    public Claw(GamepadWrapper secondaryController, Servo hook){
         this.secondaryController = secondaryController;
-        this.pusher = pusher;
+        this.hook = hook;
     }
 
     //Pusher is Active
-    private pusherActive(){
+    private hookActive(){
         pusher.setPosition(.5);
     }
 
     //Pusher is Retracted
-    private pusherRetract(){
+    private hookRetract(){
         pusher.setPosition(0);
     }
 
@@ -31,17 +31,17 @@ public class Pusher implements Subsystem{
 
     @Override
     public void update(){
-        boolean buttonA = secondaryController.getBtnA();
+        boolean buttonX = secondaryController.getBtnX();
         boolean dPadUp = secondaryController.getDPadUp();
         boolean dPadDown = secondaryController.getDPadDown();
 
 
         if (buttonA){
             if (dPadDown){
-                pusherActive();
+                hookActive();
             }
             else if (dPadUp){
-                pusherRetract();
+                hookRetract();
             }
         }
     }
