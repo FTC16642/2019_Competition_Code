@@ -27,15 +27,15 @@ public class Claw implements Subsystem{
 
     //Write Out the Med Position Sequence with Sleeps
     private clawMed(){
-        elbow.setPosition(.5);
-        lift.setPower(.5);
+        elbow.setPosition(-.5);
+        lift.setPower(-.5);
         wrist.setPosition(.5);
     }
     
     //Write Out the High Position Sequence with Sleeps
     private clawHigh(){
-        elbow.setPosition(1);
-        lift.setPower(1);
+        elbow.setPosition(-1);
+        lift.setPower(-1);
         wrist.setPosition(1);
     }
     
