@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class HardwareManager {
@@ -26,6 +28,10 @@ public class HardwareManager {
 
     //Hook Servo
     public Servo hook;
+
+    //Color and Light Sensor
+    public LightSensor lightSensor;
+    public ColorSensor colorSensor;
 
     public HardwareManager(HardwareMap hardwareMap)
     {
