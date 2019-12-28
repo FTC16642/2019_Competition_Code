@@ -16,12 +16,12 @@ public class Pusher implements Subsystem{
 
     //Pusher is Active
     private void pusherActive(){
-        pusher.setPosition(.5);
+        pusher.setPosition(.3);
     }
 
     //Pusher is Retracted
     private void pusherRetract(){
-        pusher.setPosition(0);
+        pusher.setPosition(1);
     }
 
     @Override

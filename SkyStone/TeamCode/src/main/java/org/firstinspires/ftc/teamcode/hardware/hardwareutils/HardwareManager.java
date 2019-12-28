@@ -64,6 +64,6 @@ public class HardwareManager {
         intakeLeft = hardwareMap.get(DcMotor.class, HardwareNames.intakeLeft);
         intakeRight = hardwareMap.get(DcMotor.class, HardwareNames.intakeRight);
 
-        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
     }
 }

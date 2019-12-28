@@ -16,12 +16,12 @@ public class Hook implements Subsystem{
 
     //Pusher is Active
     private void hookActive(){
-        hook.setPosition(.5);
+        hook.setPosition(0);
     }
 
     //Pusher is Retracted
     private void hookRetract(){
-        hook.setPosition(0);
+        hook.setPosition(.4);
     }
 
     @Override

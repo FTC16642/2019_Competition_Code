@@ -19,7 +19,7 @@ public class Intake implements Subsystem{
     //Intake is Active
     private void intakeActive(double speed){
         intakeLeft.setPower(speed);
-        intakeRight.setPower(speed);
+        intakeRight.setPower(-speed);
     }
 
     //Intake is Stopped
