@@ -10,7 +10,7 @@ public class Mecanum implements Subsystem {
     GamepadWrapper driveController;
 
 
-    public void setPower(double leftStickY, double leftStickX, double rightStickX){
+    public void setPowerMecanum(double leftStickY, double leftStickX, double rightStickX){
     double magnitude = Math.hypot(leftStickX, leftStickY);
     double robotAngle = Math.atan2(leftStickY, leftStickX) - Math.PI / 4;
     double rightX = rightStickX;
@@ -46,6 +46,6 @@ public class Mecanum implements Subsystem {
 
     @Override
     public void update(){
-        setPower(driveController.getLeftStickY(), driveController.getLeftStickX(), driveController.getRightStickX());
+        setPowerMecanum(driveController.getLeftStickY(), driveController.getLeftStickX(), driveController.getRightStickX());
     }
 }

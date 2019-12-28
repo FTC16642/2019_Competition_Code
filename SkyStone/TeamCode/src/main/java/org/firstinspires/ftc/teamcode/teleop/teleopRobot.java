@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
+import org.firstinspires.ftc.teamcode.subsystems.Arcade;
 import org.firstinspires.ftc.teamcode.subsystems.Pusher;
 import org.firstinspires.ftc.teamcode.subsystems.Mecanum;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
@@ -38,6 +39,7 @@ public class teleopRobot extends OpMode {
 
 
         Subsystem drive = setUpDriveTrain();
+        Subsystem driveArcade = setUpDriveTrainArcade();
         Subsystem claw = setUpClaw();
         Subsystem pusher = setUpPusher();
         Subsystem intake = setUpIntake();
@@ -69,4 +71,10 @@ public class teleopRobot extends OpMode {
     {
         return new Mecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
     }
+
+    private Subsystem setUpDriveTrainArcade()
+    {
+        return new Arcade(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
+    }
+
 }
