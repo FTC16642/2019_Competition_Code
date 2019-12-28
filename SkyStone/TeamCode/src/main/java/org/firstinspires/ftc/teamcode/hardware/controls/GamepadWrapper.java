@@ -27,8 +27,13 @@ public class GamepadWrapper{
     }
 
 
-    public boolean getBtnY(){
+    public boolean getBtnY()
+    {
         return gamepad.y;
+    }
+
+    public boolean getBtnMiddle() {
+        return gamepad.guide;
     }
 
     public boolean getDPadUp(){

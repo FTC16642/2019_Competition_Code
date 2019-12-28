@@ -36,6 +36,7 @@ public class teleopRobot extends OpMode {
         hardware = new HardwareManager(hardwareMap);
         driveController = new GamepadWrapper(gamepad1);
         secondaryController = new GamepadWrapper(gamepad2);
+        boolean guide= secondaryController.getBtnMiddle();
 
         Subsystem driveMecanum = setUpDriveTrainMecanum();
         Subsystem driveArcade = setUpDriveTrainArcade();
@@ -43,7 +44,15 @@ public class teleopRobot extends OpMode {
         Subsystem pusher = setUpPusher();
         Subsystem intake = setUpIntake();
         Subsystem hook = setUpHook();
-        subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook, driveArcade);
+        //subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook, driveArcade);
+
+
+        if(guide) {
+            subsystems = new SubsystemManager(claw, pusher, intake, hook, driveArcade);
+        }
+        else{
+            subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook);
+        }
     }
     @Override
     public void loop() {
