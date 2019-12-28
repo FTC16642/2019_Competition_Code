@@ -32,19 +32,18 @@ public class teleopRobot extends OpMode {
     public void init() {
         //verify switch on bottom is in X pos
         //for drive controller, do Start btn + A btn
-        //for manip controller, do Start btn + B btn
+        //for secondary controller, do Start btn + B btn
         hardware = new HardwareManager(hardwareMap);
         driveController = new GamepadWrapper(gamepad1);
         secondaryController = new GamepadWrapper(gamepad2);
 
-
-        Subsystem drive = setUpDriveTrain();
+        Subsystem driveMecanum = setUpDriveTrainMecanum();
         Subsystem driveArcade = setUpDriveTrainArcade();
         Subsystem claw = setUpClaw();
         Subsystem pusher = setUpPusher();
         Subsystem intake = setUpIntake();
         Subsystem hook = setUpHook();
-        subsystems = new SubsystemManager(drive, claw, pusher, intake, hook);
+        subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook, driveArcade);
     }
     @Override
     public void loop() {
@@ -67,11 +66,10 @@ public class teleopRobot extends OpMode {
     {
         return new Intake(driveController, hardware.intakeLeft, hardware.intakeRight);
     }
-    private Subsystem setUpDriveTrain()
+    private Subsystem setUpDriveTrainMecanum()
     {
         return new Mecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
     }
-
     private Subsystem setUpDriveTrainArcade()
     {
         return new Arcade(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
