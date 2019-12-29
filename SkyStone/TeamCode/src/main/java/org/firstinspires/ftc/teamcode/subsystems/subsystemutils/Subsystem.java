@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.sensors.sensorutils.Sensor;
 
 public interface Subsystem
 {
-    public void init(Sensor sensor);
+    public void init();
 
     public void update();
 }

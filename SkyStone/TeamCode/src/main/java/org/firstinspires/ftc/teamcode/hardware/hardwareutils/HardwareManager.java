@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -29,9 +30,11 @@ public class HardwareManager {
     //Hook Servo
     public Servo hook;
 
-    //Color and Light Sensor
+    //Sensors
     public LightSensor lightSensor;
     public ColorSensor colorSensor;
+    public DistanceSensor distanceSensor;
+
 
     public HardwareManager(HardwareMap hardwareMap)
     {

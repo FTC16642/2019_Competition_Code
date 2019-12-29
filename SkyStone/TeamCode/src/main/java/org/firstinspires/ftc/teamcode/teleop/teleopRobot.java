@@ -5,6 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
+import org.firstinspires.ftc.teamcode.sensors.ColorDetect;
+import org.firstinspires.ftc.teamcode.sensors.DistanceDetect;
+import org.firstinspires.ftc.teamcode.sensors.LightDetect;
+import org.firstinspires.ftc.teamcode.sensors.sensorutils.Sensor;
+import org.firstinspires.ftc.teamcode.sensors.sensorutils.SensorManager;
 import org.firstinspires.ftc.teamcode.subsystems.Arcade;
 import org.firstinspires.ftc.teamcode.subsystems.Pusher;
 import org.firstinspires.ftc.teamcode.subsystems.Mecanum;
@@ -22,6 +27,8 @@ public class teleopRobot extends OpMode {
     GamepadWrapper secondaryController; //gamepad 2;
 
     SubsystemManager subsystems;
+
+    SensorManager sensors;
 
     @Override
     public void init_loop() {
@@ -46,10 +53,16 @@ public class teleopRobot extends OpMode {
         Subsystem intake = setUpIntake();
         Subsystem hook = setUpHook();
         subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook, driveArcade);
+
+        Sensor color = setUpColor();
+        Sensor light = setUpLight();
+        Sensor distance = setUpDistance();
+        sensors = new SensorManager(color, light, distance);
     }
     @Override
     public void loop() {
         subsystems.update();
+        sensors.update();
 
     }
 
@@ -75,6 +88,21 @@ public class teleopRobot extends OpMode {
     private Subsystem setUpDriveTrainArcade()
     {
         return new Arcade(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
+    }
+
+
+
+    private Sensor setUpColor()
+    {
+        return new ColorDetect(hardware.colorSensor);
+    }
+    private Sensor setUpLight()
+    {
+        return new LightDetect(hardware.lightSensor);
+    }
+    private Sensor setUpDistance()
+    {
+        return new DistanceDetect(hardware.distanceSensor);
     }
 
 }
