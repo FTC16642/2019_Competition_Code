@@ -22,11 +22,13 @@ public class teleopRobot extends OpMode {
     GamepadWrapper secondaryController; //gamepad 2;
 
     SubsystemManager subsystems;
+
     @Override
     public void init_loop() {
         // If you are using Motorola E4 phones,
         // you should send telemetry data while waiting for start.
         telemetry.addLine("Status: Waiting for Start");
+        //telemetry
     }
     @Override
     public void init() {
