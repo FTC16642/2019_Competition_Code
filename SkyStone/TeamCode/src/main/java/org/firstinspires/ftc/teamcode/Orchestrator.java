@@ -36,6 +36,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Common.HardwareIO;
+
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -56,7 +58,8 @@ public class Orchestrator extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-
+    private HardwareIO IO = null;
+    private Hook hook = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -64,7 +67,15 @@ public class Orchestrator extends OpMode
     @Override
     public void init()
     {
+        IO.telemetry=telemetry;
+        IO.hardwareMap = hardwareMap;
+        IO.gamePad1=gamepad1;
+        IO.gamePad2 = gamepad2;
+
         telemetry.addData("Status", "Initialized");
+
+        hook = new Hook(IO);
+
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -76,6 +87,8 @@ public class Orchestrator extends OpMode
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
+
     }
 
     /*
