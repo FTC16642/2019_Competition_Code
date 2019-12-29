@@ -3,17 +3,16 @@ package org.firstinspires.ftc.teamcode.Common;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import javax.sql.CommonDataSource;
+//import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 public abstract class ComponentBase {
 
     // Initializes the hardware map and the gamepad
-    protected HardwareMap hardwareMap = null;
-    protected Gamepad gamePad = null;
+    protected HardwareIO IO;
 
-    public ComponentBase(HardwareMap hdMap, Gamepad gp1, Gamepad gp2) {
+    public ComponentBase(HardwareIO InputOutput) {
 
-        hardwareMap = hdMap;
-        gamePad = gp1;
-        gamePad = gp2;
+        IO=InputOutput;
     }
 
     // Runs once when the player presses init
