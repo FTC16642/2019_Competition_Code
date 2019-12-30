@@ -61,7 +61,7 @@ public class Orchestrator extends OpMode
     private HardwareIO IO = null;
     private Hook hook = null;
     private MecanumDrive drive = null;
-
+    private Pusher pusher = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -75,9 +75,13 @@ public class Orchestrator extends OpMode
 
         telemetry.addData("Status", "Initialized");
 
+        pusher = new Pusher(IO);
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
+
         drive.init();
+        hook.init();
+        pusher.init();
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -133,6 +137,8 @@ public class Orchestrator extends OpMode
         // leftPower  = -gamepad1.left_stick_y ;
         // rightPower = -gamepad1.right_stick_y ;
         drive.loop();
+        hook.loop();
+        pusher.loop();
         // Send calculated power to wheels
 
     }
@@ -144,6 +150,8 @@ public class Orchestrator extends OpMode
     public void stop()
     {
         telemetry.addData("Status", "stop");
+        hook.stop();
+        pusher.stop();
     }
 
 }
