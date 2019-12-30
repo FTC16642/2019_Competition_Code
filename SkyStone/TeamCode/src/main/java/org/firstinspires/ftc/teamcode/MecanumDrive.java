@@ -19,6 +19,8 @@ public class MecanumDrive extends ComponentBase
     private DcMotor frdMtr = null;
     private DcMotor bldMtr = null;
     private DcMotor brdMtr = null;
+    boolean formula1 = false;
+
     public MecanumDrive(HardwareIO InputOutput)
     {
         super(InputOutput);
@@ -43,11 +45,22 @@ public class MecanumDrive extends ComponentBase
 
     public void loop()
     {
-
         getInputs();
-        holonomicFormula2();
-        setPower();
+        if(IO.gamePad1.b)
+        {
+            formula1 = !formula1;
+        }
 
+        if (formula1)
+        {
+            IO.telemetry.addData("Status", "Formula1");
+            holonomicFormula();
+        }
+        else
+        {
+            IO.telemetry.addData("Status", "Formula2,");
+            holonomicFormula2();
+        }
     }
 
     private void holonomicFormula2()
@@ -124,6 +137,8 @@ public class MecanumDrive extends ComponentBase
         FR_power = Range.clip(FR_power_raw, -1, 1);
         RL_power = Range.clip(RL_power_raw,-1 ,1);
         RR_power = Range.clip(RR_power_raw, -1, 1);
+
+        setPower();
     }
 
 }

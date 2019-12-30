@@ -53,7 +53,7 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
  */
 
 @TeleOp(name="Orchestrator", group="Iterative Opmode")
-@Disabled
+//@Disabled
 public class Orchestrator extends OpMode
 {
     // Declare OpMode members.
