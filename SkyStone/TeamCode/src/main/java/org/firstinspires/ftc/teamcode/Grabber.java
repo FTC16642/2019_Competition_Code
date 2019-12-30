@@ -26,8 +26,7 @@ public class Grabber extends ComponentBase {
 
     //Runs repeatedly after the player presses stop
     public void loop() {
-        unlock();
-        lock();
+
     }
 
     public void stop() {
