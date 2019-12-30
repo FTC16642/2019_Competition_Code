@@ -18,6 +18,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Hook;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager;
+import org.firstinspires.ftc.teamcode.telemetry.ColorSensorData;
+import org.firstinspires.ftc.teamcode.telemetry.DistanceSensorData;
+import org.firstinspires.ftc.teamcode.telemetry.LightSensorData;
+import org.firstinspires.ftc.teamcode.telemetry.telemetryutils.TelemetryItems;
+import org.firstinspires.ftc.teamcode.telemetry.telemetryutils.TelemetryManager;
 
 @TeleOp
 public class teleopRobot extends OpMode {
@@ -29,6 +34,8 @@ public class teleopRobot extends OpMode {
     SubsystemManager subsystems;
 
     SensorManager sensors;
+
+    TelemetryManager telemetries;
 
     @Override
     public void init_loop() {
@@ -58,6 +65,11 @@ public class teleopRobot extends OpMode {
         Sensor light = setUpLight();
         Sensor distance = setUpDistance();
         sensors = new SensorManager(color, light, distance);
+
+        TelemetryItems colorData = setUpColorData();
+        TelemetryItems lightData = setUpLightData();
+        TelemetryItems distanceData = setUpDistanceData();
+        telemetries = new TelemetryManager(colorData, lightData, distanceData);
     }
     @Override
     public void loop() {
@@ -103,6 +115,20 @@ public class teleopRobot extends OpMode {
     private Sensor setUpDistance()
     {
         return new DistanceDetect(hardware.distanceSensor);
+    }
+
+
+    private TelemetryItems setUpColorData()
+    {
+        return new ColorSensorData(hardware.colorSensor);
+    }
+    private TelemetryItems setUpLightData()
+    {
+        return new LightSensorData(hardware.lightSensor);
+    }
+    private TelemetryItems setUpDistanceData()
+    {
+        return new DistanceSensorData(hardware.distanceSensor);
     }
 
 }
