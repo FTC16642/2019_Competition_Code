@@ -15,10 +15,10 @@ public class MecanumDrive extends ComponentBase
     float rightX;
     float leftY;
     float leftX;
-    private DcMotor fld = null;
-    private DcMotor frd = null;
-    private DcMotor bld = null;
-    private DcMotor brd = null;
+    private DcMotor fldMtr = null;
+    private DcMotor frdMtr = null;
+    private DcMotor bldMtr = null;
+    private DcMotor brdMtr = null;
     public MecanumDrive(HardwareIO InputOutput)
     {
         super(InputOutput);
@@ -26,17 +26,18 @@ public class MecanumDrive extends ComponentBase
 
     public void init()
     {
-        fld = IO.hardwareMap.get(DcMotor.class, "leftFrontWheel" );
-        frd = IO.hardwareMap.get(DcMotor.class, "rightFrontWheel");
-        bld = IO.hardwareMap.get(DcMotor.class, "leftBackWheel" );
-        brd = IO.hardwareMap.get(DcMotor.class, "rightBackWheel" );
-        frd.setDirection(DcMotor.Direction.REVERSE);
-        brd.setDirection(DcMotor.Direction.REVERSE);
 
-        fld.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bld.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        brd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fldMtr = IO.hardwareMap.get(DcMotor.class, "leftFrontWheel" );
+        frdMtr = IO.hardwareMap.get(DcMotor.class, "rightFrontWheel");
+        bldMtr = IO.hardwareMap.get(DcMotor.class, "leftBackWheel" );
+        brdMtr = IO.hardwareMap.get(DcMotor.class, "rightBackWheel" );
+        frdMtr.setDirection(DcMotor.Direction.REVERSE);
+        brdMtr.setDirection(DcMotor.Direction.REVERSE);
+
+        fldMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frdMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bldMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        brdMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -44,17 +45,56 @@ public class MecanumDrive extends ComponentBase
     {
 
         getInputs();
-        holonomicFormula();
+        holonomicFormula2();
         setPower();
 
     }
 
+    private void holonomicFormula2()
+    {
+        double x = Math.pow(leftX, 3.0);
+        double y = Math.pow(leftY, 3.0);
+
+        double rotation = Math.pow(rightX, 3.0);
+        double direction = Math.atan2(x, y);
+        double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
+
+        double fld = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+        double frd = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+        double brd = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+        double bld = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+    
+        setMtrPow(fld, frd, brd, bld);
+
+    }
+
+    private void setMtrPow(double _fld, double _frd, double _brd, double _bld)
+    {
+        double scale = maxAbs(1.0,_fld, _frd, _brd, _bld);
+        fldMtr.setPower(_fld / scale);
+        frdMtr.setPower(_frd/ scale);
+        brdMtr.setPower(_brd / scale);
+        bldMtr.setPower(_bld / scale);
+    }
+
+    private static double maxAbs(double... xs)
+    {
+        double ret = Double.MIN_VALUE;
+        for (double x : xs)
+        {
+            if (Math.abs(x) > ret) {
+                ret = Math.abs(x);
+            }
+        }
+        return ret;
+    }
+
     private void setPower()
     {
-        fld.setPower(FL_power);
-        frd.setPower(FR_power);
-        bld.setPower(RL_power);
-        brd.setPower(RR_power);
+        fldMtr.setPower(FL_power);
+        frdMtr.setPower(FR_power);
+        bldMtr.setPower(RL_power);
+        brdMtr.setPower(RR_power);
         String displayValue = String.format("FL = %.2f, FR = %.2f, RL = %.2f, RR = %.2f",
                 FL_power, FR_power, RL_power, RR_power);
         IO.telemetry.addData("MecanumDrive", displayValue);
