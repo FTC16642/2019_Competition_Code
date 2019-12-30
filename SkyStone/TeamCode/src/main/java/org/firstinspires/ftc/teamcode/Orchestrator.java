@@ -53,12 +53,12 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
  */
 
 @TeleOp(name="Orchestrator", group="Iterative Opmode")
-//@Disabled
 public class Orchestrator extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private HardwareIO IO = null;
+
     private Hook hook = null;
     private MecanumDrive drive = null;
 
@@ -68,15 +68,14 @@ public class Orchestrator extends OpMode
     @Override
     public void init()
     {
-        IO.telemetry=telemetry;
-        IO.hardwareMap = hardwareMap;
-        IO.gamePad1=gamepad1;
-        IO.gamePad2 = gamepad2;
+        HardwareIO IO = new HardwareIO(hardwareMap, gamepad1, gamepad2, telemetry);
 
         telemetry.addData("Status", "Initialized");
 
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
+
+        hook.init();
         drive.init();
 
 
@@ -119,21 +118,9 @@ public class Orchestrator extends OpMode
     public void loop()
     {
         telemetry.addData("Status", "loop");
-        // Setup a variable for each drive wheel to save power level for telemetry
 
-        // Choose to drive using either Tank Mode, or POV Mode
-        // Comment out the method that's not used.  The default below is POV.
-
-        // POV Mode uses left stick to go forward, and right stick to turn.
-        // - This uses basic math to combine motions and is easier to drive straight.
-
-
-        // Tank Mode uses one stick to control each wheel.
-        // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
         drive.loop();
-        // Send calculated power to wheels
+        hook.loop();
 
     }
 
