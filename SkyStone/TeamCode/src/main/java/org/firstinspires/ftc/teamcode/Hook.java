@@ -18,7 +18,7 @@ public class Hook extends ComponentBase {
     Servo servo;
     double servoPosition;
 
-
+    // Constructor class to initialize the variables
     public Hook(HardwareIO InputOutput ){
         super(InputOutput);
         runtime = new ElapsedTime();
@@ -28,9 +28,9 @@ public class Hook extends ComponentBase {
 
     // Runs when the player presses init
     public void init() {
-        IO.telemetry.addData("Status", "Initializing");
+        IO.telemetry.addData("Status", "Initializing hook");
         pullUp();
-        IO.telemetry.addData("Status", "Initialized");
+        IO.telemetry.addData("Status", "Initialized hook");
     }
     // Runs repeatedly after the player presses start
     public void loop() {
@@ -46,12 +46,13 @@ public class Hook extends ComponentBase {
 
     // Runs once when the player presses stop
     public void stop() {
-        IO.telemetry.addData("Status", "Stopping");
+        IO.telemetry.addData("Status", "Stopping hook");
         runtime = null;
         servo = null;
-        IO.telemetry.addData("Status", "Stopped");
+        IO.telemetry.addData("Status", "Stopped hook");
     }
 
+    // A function to pull the hook up
     public void pullUp()
     {
         {
@@ -62,6 +63,7 @@ public class Hook extends ComponentBase {
         }
     }
 
+    // A function to pull the hook back down
     public void pullDown (){
         {
             IO.telemetry.addData("Status", "Lowering hook");
