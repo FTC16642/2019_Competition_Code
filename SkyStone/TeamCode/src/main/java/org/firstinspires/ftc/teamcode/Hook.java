@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
-@TeleOp(name="Hook", group = "Iterative Opmode")
-
 public class Hook extends ComponentBase {
 
     // Declare objects that will be used in the code

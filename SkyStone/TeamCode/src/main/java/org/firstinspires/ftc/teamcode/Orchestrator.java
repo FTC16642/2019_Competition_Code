@@ -53,7 +53,6 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
  */
 
 @TeleOp(name="Orchestrator", group="Iterative Opmode")
-@Disabled
 public class Orchestrator extends OpMode
 {
     // Declare OpMode members.
@@ -77,6 +76,8 @@ public class Orchestrator extends OpMode
 
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
+
+        hook.init();
         drive.init();
 
 
@@ -133,6 +134,7 @@ public class Orchestrator extends OpMode
         // leftPower  = -gamepad1.left_stick_y ;
         // rightPower = -gamepad1.right_stick_y ;
         drive.loop();
+        hook.loop();
         // Send calculated power to wheels
 
     }
