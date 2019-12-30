@@ -15,7 +15,7 @@ public class Pusher extends ComponentBase {
     // Constructor class to initialize the variables
     public Pusher(HardwareIO InputOutput ){
         super(InputOutput);
-        servo = IO.hardwareMap.servo.get("hookServo");
+        servo = IO.hardwareMap.servo.get("Pusher");
     }
 
     // Runs when the player presses init
@@ -46,7 +46,7 @@ public class Pusher extends ComponentBase {
     {
         {
             IO.telemetry.addData("Status", "Raising pusher");
-            servoPosition = 0.4;
+            servoPosition = 0.5;
             servo.setPosition(servoPosition);
             IO.telemetry.addData("Status", "pusher raised");
         }
