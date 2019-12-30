@@ -32,7 +32,7 @@ public class Hook extends ComponentBase {
     }
     // Runs repeatedly after the player presses start
     public void loop() {
-        
+
             if (IO.gamePad1.left_bumper)
                 pullDown();
             else if (IO.gamePad1.right_bumper)
@@ -52,6 +52,7 @@ public class Hook extends ComponentBase {
     public void pullUp()
     {
         {
+
             IO.telemetry.addData("Status", "Raising hook");
             servoPosition = 0.4;
             servo.setPosition(servoPosition);
