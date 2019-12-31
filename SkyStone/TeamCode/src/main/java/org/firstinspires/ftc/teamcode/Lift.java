@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
@@ -49,7 +50,7 @@ public class Lift extends ComponentBase {
     {
         if (IO.gamePad2.left_bumper == true)
             wristSrv.setPosition(-20);
-        else(IO.gamePad2.left_bumper == false)
+        else if(IO.gamePad2.left_bumper == false)
             wristSrv.setPosition(.5);
     }
 
@@ -57,7 +58,7 @@ public class Lift extends ComponentBase {
     {
         if (IO.gamePad2.right_bumper == true)
             wristSrv.setPosition(0);
-        else(IO.gamePad2.right_bumper == false)
+        else if(IO.gamePad2.right_bumper == false)
         wristSrv.setPosition(1);
     }
 
