@@ -1,72 +1,64 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
-public class Hook extends ComponentBase {
+public class Pusher extends ComponentBase {
 
     // Declare objects that will be used in the code
-    private ElapsedTime runtime;
     Servo servo;
     double servoPosition;
 
     // Constructor class to initialize the variables
-    public Hook(HardwareIO InputOutput ){
+    public Pusher(HardwareIO InputOutput ){
         super(InputOutput);
-        runtime = new ElapsedTime();
-        servo = IO.hardwareMap.servo.get("hookServo");
-
+        servo = IO.hardwareMap.servo.get("Pusher");
     }
 
     // Runs when the player presses init
     public void init() {
-        IO.telemetry.addData("Status", "Initializing hook");
+        IO.telemetry.addData("Status", "Initializing pusher");
         pullUp();
-        IO.telemetry.addData("Status", "Initialized hook");
+        IO.telemetry.addData("Status", "Initialized pusher");
     }
     // Runs repeatedly after the player presses start
     public void loop() {
 
-            if (IO.gamePad1.left_bumper)
-                pullDown();
-            else if (IO.gamePad1.right_bumper)
-                pullUp();
+        if (IO.gamePad2.dpad_down)
+            pullDown();
+        else if (IO.gamePad2.dpad_up)
+            pullUp();
 
     }
 
     // Runs once when the player presses stop
     public void stop() {
-        IO.telemetry.addData("Status", "Stopping hook");
-        runtime = null;
+        IO.telemetry.addData("Status", "Stopping pusher");
         servo = null;
-        IO.telemetry.addData("Status", "Stopped hook");
+        IO.telemetry.addData("Status", "Stopped pusher");
     }
 
     // A function to pull the hook up
     public void pullUp()
     {
         {
-
-            IO.telemetry.addData("Status", "Raising hook");
-            servoPosition = 0.4;
+            IO.telemetry.addData("Status", "Raising pusher");
+            servoPosition = 0.5;
             servo.setPosition(servoPosition);
-            IO.telemetry.addData("Status", "Hook raised");
+            IO.telemetry.addData("Status", "pusher raised");
         }
     }
 
     // A function to pull the hook back down
     public void pullDown (){
         {
-            IO.telemetry.addData("Status", "Lowering hook");
+            IO.telemetry.addData("Status", "Lowering pusher");
             servoPosition = 0.0;
             servo.setPosition(servoPosition);
-            IO.telemetry.addData("Status", "Hook lowered");
+            IO.telemetry.addData("Status", "pusher lowered");
         }
     }
 

@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 public class Lift extends ComponentBase {
 
     private DcMotor liftMtr = null;
+    private Servo wristSrv = null;
+    private Servo grabSrv = null;
     double motorPower;
 
 
@@ -25,8 +27,8 @@ public class Lift extends ComponentBase {
     public void loop()
     {
         lift();
-        //moveWrist();
-        //grab();
+        moveWrist();
+        grab();
     }
 
     // Runs once when the player presses stop
@@ -43,6 +45,21 @@ public class Lift extends ComponentBase {
             liftMtr.setPower(IO.gamePad2.right_trigger * -1);
     }
 
+    public void grab()
+    {
+        if (IO.gamePad2.left_bumper == true)
+            wristSrv.setPosition(-20);
+        else(IO.gamePad2.left_bumper == false)
+            wristSrv.setPosition(.5);
+    }
+
+    public void moveWrist()
+    {
+        if (IO.gamePad2.right_bumper == true)
+            wristSrv.setPosition(0);
+        else(IO.gamePad2.right_bumper == false)
+        wristSrv.setPosition(1);
+    }
 
 }
 

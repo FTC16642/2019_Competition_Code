@@ -65,6 +65,7 @@ public class AutonomousTest extends LinearOpMode {
             grabber.unlock();
             sleep(2000);
             grabber.lock();
+            sleep(2000);
 
 
             // Show the elapsed game time and wheel power.
