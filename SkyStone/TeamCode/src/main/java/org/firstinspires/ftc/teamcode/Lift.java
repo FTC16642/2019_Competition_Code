@@ -59,7 +59,11 @@ public class Lift extends ComponentBase {
         if (IO.gamePad2.right_bumper == true)
             wristSrv.setPosition(0);
         else if(IO.gamePad2.right_bumper == false)
+<<<<<<< HEAD
             wristSrv.setPosition(1);
+=======
+        wristSrv.setPosition(1);
+>>>>>>> 1676173404727b8b2c43860f155a5a62707b2454
     }
 
 }
