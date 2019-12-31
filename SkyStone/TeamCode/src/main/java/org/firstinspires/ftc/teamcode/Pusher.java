@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
@@ -15,7 +14,7 @@ public class Pusher extends ComponentBase {
     // Constructor class to initialize the variables
     public Pusher(HardwareIO InputOutput ){
         super(InputOutput);
-        servo = IO.hardwareMap.servo.get("Pusher");
+        servo = IO.hardwareMap.servo.get("pusher");
     }
 
     // Runs when the player presses init

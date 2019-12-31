@@ -29,12 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
@@ -61,6 +58,7 @@ public class Orchestrator extends OpMode
     private Hook hook = null;
     private MecanumDrive drive = null;
     private Pusher pusher = null;
+    private Lift lift = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -74,11 +72,12 @@ public class Orchestrator extends OpMode
         pusher = new Pusher(IO);
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
+        lift =  new Lift(IO);
 
         drive.init();
         hook.init();
         pusher.init();
-
+        lift.init();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -123,6 +122,7 @@ public class Orchestrator extends OpMode
         drive.loop();
         hook.loop();
         pusher.loop();
+        lift.loop();
     }
 
     /*
