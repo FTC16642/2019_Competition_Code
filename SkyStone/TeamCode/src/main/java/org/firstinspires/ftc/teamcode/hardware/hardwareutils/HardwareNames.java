@@ -21,7 +21,7 @@ public class HardwareNames {
 
     //Hook Servo Name
 
-    public static final String hook = "hook";
+    public static final String hook = "hookServo";
 
     //Intake Motor Names
     public static final String intakeLeft = "leftIntake";

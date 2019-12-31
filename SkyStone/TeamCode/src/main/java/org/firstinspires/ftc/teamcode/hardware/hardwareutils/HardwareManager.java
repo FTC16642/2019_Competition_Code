@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.sensors.LightDetect;
+import org.firstinspires.ftc.teamcode.sensors.sensorutils.SensorNames;
+
 public class HardwareManager {
 
     HardwareMap hardwareMap;
@@ -43,6 +46,10 @@ public class HardwareManager {
         initClaw();
         initPusher();
         initIntake();
+        initHook();
+        initColor();
+        //initDistance();
+        //initLight();
     }
 
     private void initDrivetrain()
@@ -63,6 +70,10 @@ public class HardwareManager {
         wrist = hardwareMap.get(Servo.class, HardwareNames.wrist);
     }
 
+    private void initHook(){
+        hook = hardwareMap.get(Servo.class, HardwareNames.hook);
+    }
+
     private void initPusher()
     {
         pusher = hardwareMap.get(Servo.class, HardwareNames.pusher);
@@ -74,5 +85,17 @@ public class HardwareManager {
         intakeRight = hardwareMap.get(DcMotor.class, HardwareNames.intakeRight);
 
         intakeRight.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    private void initColor(){
+        colorSensor = hardwareMap.get(ColorSensor.class, SensorNames.colorDetect);
+    }
+
+    private void initDistance(){
+        distanceSensor = hardwareMap.get(DistanceSensor.class, SensorNames.distanceDetect);
+    }
+
+    private void initLight(){
+        lightSensor = hardwareMap.get(LightSensor.class, SensorNames.lightDetect);
     }
 }

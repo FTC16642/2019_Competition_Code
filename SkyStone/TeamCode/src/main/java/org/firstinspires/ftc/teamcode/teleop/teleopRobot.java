@@ -59,17 +59,25 @@ public class teleopRobot extends OpMode {
         Subsystem pusher = setUpPusher();
         Subsystem intake = setUpIntake();
         Subsystem hook = setUpHook();
-        subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook, driveArcade);
+
+        if (1==2) {
+            subsystems = new SubsystemManager(claw, pusher, intake, hook, driveArcade);
+        }
+        else{
+            subsystems = new SubsystemManager(driveMecanum, claw, pusher, intake, hook);
+        }
 
         Sensor color = setUpColor();
-        Sensor light = setUpLight();
-        Sensor distance = setUpDistance();
-        sensors = new SensorManager(color, light, distance);
+        //Sensor light = setUpLight();
+        //Sensor distance = setUpDistance();
+        sensors = new SensorManager(color);
+        //sensors = new SensorManager(color, light, distance);
 
         TelemetryItems colorData = setUpColorData();
-        TelemetryItems lightData = setUpLightData();
-        TelemetryItems distanceData = setUpDistanceData();
-        telemetries = new TelemetryManager(colorData, lightData, distanceData);
+        //TelemetryItems lightData = setUpLightData();
+        //TelemetryItems distanceData = setUpDistanceData();
+        telemetries = new TelemetryManager(colorData);
+        //telemetries = new TelemetryManager(colorData, lightData, distanceData);
     }
     @Override
     public void loop() {

@@ -6,7 +6,7 @@ public class SensorNames {
     public static final String lightDetect = "Light Sensor";
 
     //Color Sensor
-    public static final String colorDetect = "Color Sensor";
+    public static final String colorDetect = "sensor_colorDistance";
 
     //Distance Sensor
     public static final String distanceDetect = "Distance Sensor";
