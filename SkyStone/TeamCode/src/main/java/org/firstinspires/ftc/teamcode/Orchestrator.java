@@ -59,6 +59,7 @@ public class Orchestrator extends OpMode
     private MecanumDrive drive = null;
     private Pusher pusher = null;
     private Lift lift = null;
+    private Intake intake = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -73,12 +74,13 @@ public class Orchestrator extends OpMode
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
         lift =  new Lift(IO);
+        intake = new Intake(IO);
 
         drive.init();
         hook.init();
         pusher.init();
         lift.init();
-
+        intake.init();
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -123,6 +125,7 @@ public class Orchestrator extends OpMode
         hook.loop();
         pusher.loop();
         lift.loop();
+        intake.loop();
     }
 
     /*
@@ -132,8 +135,12 @@ public class Orchestrator extends OpMode
     public void stop()
     {
         telemetry.addData("Status", "stop");
+        drive.stop();
         hook.stop();
         pusher.stop();
+        lift.stop();
+        intake.stop();
+
     }
 
 }
