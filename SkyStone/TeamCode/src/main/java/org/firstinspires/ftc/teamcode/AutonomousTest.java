@@ -46,6 +46,7 @@ public class AutonomousTest extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private Grabber grabber = null;
+    private MecanumDrive drive = null;
 
     @Override
     public void runOpMode() {
@@ -56,15 +57,23 @@ public class AutonomousTest extends LinearOpMode {
 
         grabber = new Grabber(IO);
 
+        drive = new MecanumDrive(IO);
+
+        drive.init();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        //while (opModeIsActive())
+        {
             grabber.unlock();
             sleep(2000);
             grabber.lock();
+            sleep(2000);
+
+            drive.Move(1,0,0);
             sleep(2000);
 
 
