@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
 public class Intake extends ComponentBase
-
+{
     private DcMotor rintakeMtr = null;
     private DcMotor lintakeMtr = null;
 
