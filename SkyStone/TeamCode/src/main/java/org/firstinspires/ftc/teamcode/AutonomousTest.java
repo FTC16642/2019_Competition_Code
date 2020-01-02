@@ -68,8 +68,7 @@ public class AutonomousTest extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         //while (opModeIsActive())
         {
-            grabber.unlock();
-            sleep(2000);
+
             grabber.lock();
             sleep(2000);
 

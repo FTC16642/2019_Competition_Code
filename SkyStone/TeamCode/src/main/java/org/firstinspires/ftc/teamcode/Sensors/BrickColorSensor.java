@@ -63,6 +63,7 @@ public class BrickColorSensor {
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
@@ -70,7 +71,15 @@ public class BrickColorSensor {
 
 
     }
-    public int getValue()
+
+    public double getDistanceValue()
+    {
+        telemetry.addData("Distance (cm)",
+                String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+        return  sensorDistance.getDistance(DistanceUnit.CM);
+    }
+
+    public int getRGBValue()
     {
         // convert the RGB values to HSV values.
         // multiply by the SCALE_FACTOR.
@@ -81,8 +90,6 @@ public class BrickColorSensor {
                 hsvValues);
 
         // send the info back to driver station using telemetry function.
-        telemetry.addData("Distance (cm)",
-                String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
         telemetry.addData("Alpha", sensorColor.alpha());
         telemetry.addData("Red  ", sensorColor.red());
         telemetry.addData("Green", sensorColor.green());
