@@ -29,7 +29,7 @@ public class Intake extends ComponentBase
         if (IO.gamePad1.a)
         {
             rintakeMtr.setPower(1);
-            lintakeMtr.setPower(-1);
+            lintakeMtr.setPower(1);
         }
         else
         {
