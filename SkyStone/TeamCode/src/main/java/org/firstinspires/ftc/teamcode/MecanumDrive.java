@@ -64,9 +64,10 @@ public class MecanumDrive extends ComponentBase
 
     private void getInputs()
     {
-        leftX = IO.gamePad1.left_stick_x;
-        leftY = IO.gamePad1.left_stick_y;
-        rightX = IO.gamePad1.right_stick_x;
+        leftX = -IO.gamePad1.left_stick_x;
+        leftY = -IO.gamePad1.left_stick_y;
+        rightX = -IO.gamePad1.right_stick_x;
+
         String displayValue = String.format("LX = %.2f, LY = %.2f, RX = %.2f", leftX, leftY, rightX);
         IO.telemetry.addData("Sticks Value", displayValue);
     }

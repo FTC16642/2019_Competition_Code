@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
 public class Intake extends ComponentBase
-
+{
     private DcMotor rintakeMtr = null;
     private DcMotor lintakeMtr = null;
 
@@ -29,7 +29,7 @@ public class Intake extends ComponentBase
         if (IO.gamePad1.a)
         {
             rintakeMtr.setPower(1);
-            lintakeMtr.setPower(-1);
+            lintakeMtr.setPower(1);
         }
         else
         {

@@ -50,18 +50,18 @@ public class Lift extends ComponentBase {
 
     public void grab()
     {
-        if (IO.gamePad2.left_bumper == true)
+    /*    if (IO.gamePad2.left_bumper == true)
             grabSrv.setPosition(-20);
         else if(IO.gamePad2.left_bumper == false)
-            grabSrv.setPosition(.5);
+            grabSrv.setPosition(.5); */
     }
 
     public void moveWrist()
     {
-        if (IO.gamePad2.right_bumper == true)
+       /* if (IO.gamePad2.right_bumper == true)
             wristSrv.setPosition(0);
         else if(IO.gamePad2.right_bumper == false)
-            wristSrv.setPosition(1);
+            wristSrv.setPosition(1); */
     }
 
 }
