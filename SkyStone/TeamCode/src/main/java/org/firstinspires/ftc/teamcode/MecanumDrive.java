@@ -43,6 +43,10 @@ public class MecanumDrive extends ComponentBase
         blfMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         brgMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        flfMtr.setTargetPosition(0);
+        frgMtr.setTargetPosition(0);
+        blfMtr.setTargetPosition(0);
+        brgMtr.setTargetPosition(0);
     }
 
     public void loop()
@@ -74,10 +78,12 @@ public class MecanumDrive extends ComponentBase
 
     private void setPower()
     {
-        flfMtr.setPower(FL_power);
         frgMtr.setPower(FR_power);
+        flfMtr.setPower(FL_power);
         blfMtr.setPower(RL_power);
         brgMtr.setPower(RR_power);
+
+
         //String displayValue = String.format("FL = %.2f, FR = %.2f, RL = %.2f, RR = %.2f",
         //        FL_power, FR_power, RL_power, RR_power);
         //IO.telemetry.addData("MecanumDrive", displayValue);

@@ -37,9 +37,11 @@ public class BrickColorSensor {
 
     View relativeLayout = null;
 
-    private BrickColorSensor(HardwareMap hrdMap,Telemetry tele)
+
+    public BrickColorSensor(HardwareMap hrdMap,Telemetry tele)
     {
         hardwareMap = hrdMap;
+        telemetry = tele;
     }
 
     //color RGB to int
@@ -56,6 +58,7 @@ public class BrickColorSensor {
         return 0xFF000000 | R | G | B ;
     }
 
+
     public void init()
     {
         // get a reference to the color sensor.
@@ -71,6 +74,7 @@ public class BrickColorSensor {
 
 
     }
+
 
     public double getDistanceValue()
     {
@@ -119,4 +123,17 @@ public class BrickColorSensor {
             }
         });
     }
+
+    public boolean isSkystone()
+    {
+        if (sensorColor.red()< 30 && sensorColor.green() < 30)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
