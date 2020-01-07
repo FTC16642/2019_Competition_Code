@@ -29,12 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
@@ -53,7 +50,6 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
  */
 
 @TeleOp(name="Orchestrator", group="Iterative Opmode")
-@Disabled
 public class Orchestrator extends OpMode
 {
     // Declare OpMode members.
@@ -62,28 +58,29 @@ public class Orchestrator extends OpMode
     private Hook hook = null;
     private MecanumDrive drive = null;
     private Pusher pusher = null;
+    private Lift lift = null;
+    private Intake intake = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init()
     {
-        IO.telemetry=telemetry;
-        IO.hardwareMap = hardwareMap;
-        IO.gamePad1=gamepad1;
-        IO.gamePad2 = gamepad2;
+        HardwareIO IO = new HardwareIO(hardwareMap, gamepad1, gamepad2, telemetry);
 
         telemetry.addData("Status", "Initialized");
 
         pusher = new Pusher(IO);
         hook = new Hook(IO);
         drive = new MecanumDrive(IO);
+        lift =  new Lift(IO);
+        intake = new Intake(IO);
 
         drive.init();
         hook.init();
         pusher.init();
-
-
+        lift.init();
+        intake.init();
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -123,24 +120,12 @@ public class Orchestrator extends OpMode
     public void loop()
     {
         telemetry.addData("Status", "loop");
-        // Setup a variable for each drive wheel to save power level for telemetry
 
-        // Choose to drive using either Tank Mode, or POV Mode
-        // Comment out the method that's not used.  The default below is POV.
-
-        // POV Mode uses left stick to go forward, and right stick to turn.
-        // - This uses basic math to combine motions and is easier to drive straight.
-
-
-        // Tank Mode uses one stick to control each wheel.
-        // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
         drive.loop();
         hook.loop();
         pusher.loop();
-        // Send calculated power to wheels
-
+        lift.loop();
+        intake.loop();
     }
 
     /*
@@ -150,8 +135,12 @@ public class Orchestrator extends OpMode
     public void stop()
     {
         telemetry.addData("Status", "stop");
+        drive.stop();
         hook.stop();
         pusher.stop();
+        lift.stop();
+        intake.stop();
+
     }
 
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
@@ -20,7 +21,9 @@ public class Lift extends ComponentBase {
     // Runs when the player presses init
     public void init() {
         //IO.telemetry.addData("Status", "Initializing");
-        liftMtr = IO.hardwareMap.get(DcMotor.class, "liftMotor" );
+        liftMtr = IO.hardwareMap.get(DcMotor.class, "lift" );
+        wristSrv = IO.hardwareMap.get(Servo.class, "wrist");
+        grabSrv = IO.hardwareMap.get(Servo.class, "grab");
         IO.telemetry.addData("Status", "Initialized");
     }
     // Runs repeatedly after the player presses start
@@ -47,18 +50,18 @@ public class Lift extends ComponentBase {
 
     public void grab()
     {
-        if (IO.gamePad2.left_bumper == true)
-            wristSrv.setPosition(-20);
-        else(IO.gamePad2.left_bumper == false)
-            wristSrv.setPosition(.5);
+    /*    if (IO.gamePad2.left_bumper == true)
+            grabSrv.setPosition(-20);
+        else if(IO.gamePad2.left_bumper == false)
+            grabSrv.setPosition(.5); */
     }
 
     public void moveWrist()
     {
-        if (IO.gamePad2.right_bumper == true)
+       /* if (IO.gamePad2.right_bumper == true)
             wristSrv.setPosition(0);
-        else(IO.gamePad2.right_bumper == false)
-        wristSrv.setPosition(1);
+        else if(IO.gamePad2.right_bumper == false)
+            wristSrv.setPosition(1); */
     }
 
 }

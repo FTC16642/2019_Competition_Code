@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -39,9 +40,9 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 import org.firstinspires.ftc.teamcode.Grabber;
 
-@TeleOp(name="AutonomousTest", group="Linear Opmode")
+@Autonomous(name="AutonomousRed", group="Linear Opmode")
 
-public class AutonomousTest extends LinearOpMode {
+public class AutonomousRed extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -69,12 +70,11 @@ public class AutonomousTest extends LinearOpMode {
         //while (opModeIsActive())
         {
 
-            grabber.lock();
-            sleep(2000);
+            drive.Move(-1,0,0);
+            sleep(500);
 
-            drive.Move(1,0,0);
-            sleep(2000);
-
+            drive.Move(0,1,0);
+            sleep(1000);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
