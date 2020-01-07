@@ -33,9 +33,9 @@ public class Hook extends ComponentBase {
     // Runs repeatedly after the player presses start
     public void loop() {
 
-            if (IO.gamePad1.left_bumper)
+            if (IO.gamePad2.left_bumper)
                 pullDown();
-            else if (IO.gamePad1.right_bumper)
+            else if (IO.gamePad2.right_bumper)
                 pullUp();
 
     }
