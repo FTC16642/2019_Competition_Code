@@ -60,6 +60,7 @@ public class Orchestrator extends OpMode
     private Pusher pusher = null;
     private Lift lift = null;
     private Intake intake = null;
+    private Grabber grab = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -75,19 +76,14 @@ public class Orchestrator extends OpMode
         drive = new MecanumDrive(IO);
         lift =  new Lift(IO);
         intake = new Intake(IO);
+        grab = new Grabber(IO);
 
         drive.init();
         hook.init();
         pusher.init();
         lift.init();
         intake.init();
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-
+        grab.init();
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -126,6 +122,7 @@ public class Orchestrator extends OpMode
         pusher.loop();
         lift.loop();
         intake.loop();
+        grab.loop();
     }
 
     /*
@@ -140,7 +137,7 @@ public class Orchestrator extends OpMode
         pusher.stop();
         lift.stop();
         intake.stop();
-
+        grab.stop();
     }
 
 }

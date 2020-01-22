@@ -3,10 +3,22 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 public class MecanumDrive extends ComponentBase
 {
+    private int lfPos; private int rfPos; private int lrPos; private int rrPos;
+
+    // operational constanthttp://192.168.49.1:8080/java/editor.html?/src/org/firstinspires/ftc/teamcode/MecanumDrive.javas
+    public double fast = 0.5; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+    public double medium = 0.3; // medium speed
+    public double slow = 0.1; // slow speed
+    private double clicksPerInch = 87.5; // empirically measured
+    private double clicksPerDeg = 21.94; // empirically measured
+    private double lineThreshold = 0.7; // floor should be below this value, line above
+    private double redThreshold = 1.9; // red should be below this value, blue above
+
     double FL_power;
     double FR_power;
     double RL_power;
@@ -27,21 +39,28 @@ public class MecanumDrive extends ComponentBase
         super(InputOutput);
     }
 
-    public void init()
+    private void initHardware()
     {
 
         flfMtr = IO.hardwareMap.get(DcMotor.class, "leftFrontWheel" );
         frgMtr = IO.hardwareMap.get(DcMotor.class, "rightFrontWheel");
         blfMtr = IO.hardwareMap.get(DcMotor.class, "leftBackWheel" );
         brgMtr = IO.hardwareMap.get(DcMotor.class, "rightBackWheel" );
+        // The right motors need reversing
+        frgMtr.setDirection(DcMotor.Direction.FORWARD);
+        flfMtr.setDirection(DcMotor.Direction.REVERSE);
+        brgMtr.setDirection(DcMotor.Direction.FORWARD);
+        blfMtr.setDirection(DcMotor.Direction.REVERSE);
+    }
 
-        frgMtr.setDirection(DcMotor.Direction.REVERSE);
-        brgMtr.setDirection(DcMotor.Direction.REVERSE);
+    public void init()
+    {
+        initHardware();
 
-        flfMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frgMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        blfMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        brgMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //flfMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //frgMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //blfMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //brgMtr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         flfMtr.setTargetPosition(0);
         frgMtr.setTargetPosition(0);
@@ -52,16 +71,6 @@ public class MecanumDrive extends ComponentBase
     public void loop()
     {
         getInputs();
-        holonomicFormula();
-        setPower();
-    }
-
-    public void Move(float x, float y, float turn)
-    {
-        leftX = x;
-        leftY = y;
-        rightX = turn;
-
         holonomicFormula();
         setPower();
     }
@@ -86,7 +95,7 @@ public class MecanumDrive extends ComponentBase
 
         //String displayValue = String.format("FL = %.2f, FR = %.2f, RL = %.2f, RR = %.2f",
         //        FL_power, FR_power, RL_power, RR_power);
-        //IO.telemetry.addData("MecanumDrive", displayValue);
+        //IO.telemetry.addData("MecanumDrive1", displayValue);
     }
 
     private void holonomicFormula()
@@ -105,44 +114,177 @@ public class MecanumDrive extends ComponentBase
                 FL_power_raw, FR_power_raw, RL_power_raw, RR_power_raw);
         IO.telemetry.addData("MecanumDrive_Raw", displayValue);
 
-        FL_power = Range.clip(FL_power_raw, -1, 1);
-        FR_power = Range.clip(FR_power_raw, -1, 1);
-        RL_power = Range.clip(RL_power_raw,-1 ,1);
-        RR_power = Range.clip(RR_power_raw, -1, 1);
+        FL_power = Range.clip(FL_power_raw, -.5, .5);
+        FR_power = Range.clip(FR_power_raw, -.5, .5);
+        RL_power = Range.clip(RL_power_raw,-.5,.5);
+        RR_power = Range.clip(RR_power_raw, -.5, .5);
     }
 
-    //region holonomic formula2 with trignometry
-    private void holonomicFormula2()
+    //region autonomous code
+
+    public void initAuto()
     {
-        double x = Math.pow(leftX, 3.0);
-        double y = Math.pow(leftY, 3.0);
+        // Initialize the hardware variables.
+        initHardware();
 
-        double rotation = Math.pow(rightX, 3.0);
-        double direction = Math.atan2(x, y);
-        double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
 
-        double fld = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
-        double frd = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
-        double brd = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
-        double bld = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-        double scale = maxAbs(1.0, fld, frd, brd, bld);
-        FL_power = fld / scale;
-        FR_power = frd/ scale;
-        RL_power = brd / scale;
-        RR_power = bld / scale;
+        // Set the drive motor run modes:
+        flfMtr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frgMtr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        blfMtr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        brgMtr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        flfMtr.setTargetPosition(0);
+        frgMtr.setTargetPosition(0);
+        blfMtr.setTargetPosition(0);
+        brgMtr.setTargetPosition(0);
+        flfMtr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frgMtr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        blfMtr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        brgMtr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
     }
 
-    private static double maxAbs(double... xs)
-    {
-        double ret = Double.MIN_VALUE;
-        for (double x : xs)
-        {
-            if (Math.abs(x) > ret) {
-                ret = Math.abs(x);
-            }
+    public void moveForward(int howMuch, double speed) {
+        // howMuch is in inches. A negative howMuch moves backward.
+
+        // fetch motor positions
+        lfPos = flfMtr.getCurrentPosition();
+        rfPos = frgMtr.getCurrentPosition();
+        lrPos = blfMtr.getCurrentPosition();
+        rrPos = brgMtr.getCurrentPosition();
+
+        // calculate new targets
+        lfPos += howMuch * clicksPerInch;
+        rfPos += howMuch * clicksPerInch;
+        lrPos += howMuch * clicksPerInch;
+        rrPos += howMuch * clicksPerInch;
+
+        // move robot to new position
+        flfMtr.setTargetPosition(lfPos);
+        frgMtr.setTargetPosition(rfPos);
+        blfMtr.setTargetPosition(lrPos);
+        brgMtr.setTargetPosition(rrPos);
+        flfMtr.setPower(speed);
+        frgMtr.setPower(speed);
+        blfMtr.setPower(speed);
+        brgMtr.setPower(speed);
+
+        // wait for move to complete
+        while (flfMtr.isBusy() && frgMtr.isBusy() &&
+                blfMtr.isBusy() && brgMtr.isBusy()) {
+
+            // Display it for the driver.
+            IO.telemetry.addLine("Move Foward");
+            IO.telemetry.addData("Target", "%7d :%7d", lfPos, rfPos, lrPos, rrPos);
+            IO.telemetry.addData("Actual", "%7d :%7d", flfMtr.getCurrentPosition(),
+                    frgMtr.getCurrentPosition(), blfMtr.getCurrentPosition(),
+                    brgMtr.getCurrentPosition());
+            IO.telemetry.update();
         }
-        return ret;
+
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
+    }
+
+    public void moveRight(int howMuch, double speed) {
+        // howMuch is in inches. A negative howMuch moves backward.
+
+        // fetch motor positions
+        lfPos = flfMtr.getCurrentPosition();
+        rfPos = frgMtr.getCurrentPosition();
+        lrPos = blfMtr.getCurrentPosition();
+        rrPos = brgMtr.getCurrentPosition();
+
+        // calculate new targets
+        lfPos += howMuch * clicksPerInch;
+        rfPos -= howMuch * clicksPerInch;
+        lrPos -= howMuch * clicksPerInch;
+        rrPos += howMuch * clicksPerInch;
+
+        // move robot to new position
+
+        flfMtr.setTargetPosition(lfPos);
+        frgMtr.setTargetPosition(rfPos);
+        blfMtr.setTargetPosition(lrPos);
+        brgMtr.setTargetPosition(rrPos);
+
+        flfMtr.setPower(speed);
+        frgMtr.setPower(speed);
+        blfMtr.setPower(speed);
+        brgMtr.setPower(speed);
+
+        // wait for move to complete
+        while (flfMtr.isBusy() && frgMtr.isBusy() &&
+                blfMtr.isBusy() && brgMtr.isBusy()) {
+
+            // Display it for the driver.
+            IO.telemetry.addLine("Strafe Right");
+            IO.telemetry.addData("Target", "%7d :%7d", lfPos, lrPos, rrPos, rrPos);
+            IO.telemetry.addData("Actual", "%7d :%7d", flfMtr.getCurrentPosition(),
+                    frgMtr.getCurrentPosition(), blfMtr.getCurrentPosition(),
+                    brgMtr.getCurrentPosition());
+            IO.telemetry.update();
+        }
+
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
+
+    }
+
+    public void turnClockwise(int whatAngle, double speed) {
+        // whatAngle is in degrees. A negative whatAngle turns counterclockwise.
+
+        // fetch motor positions
+        lfPos = flfMtr.getCurrentPosition();
+        rfPos = frgMtr.getCurrentPosition();
+        lrPos = blfMtr.getCurrentPosition();
+        rrPos = brgMtr.getCurrentPosition();
+
+        // calculate new targets
+        lfPos += whatAngle * clicksPerDeg;
+        rfPos -= whatAngle * clicksPerDeg;
+        lrPos += whatAngle * clicksPerDeg;
+        rrPos -= whatAngle * clicksPerDeg;
+
+        // move robot to new position
+        flfMtr.setTargetPosition(lfPos);
+        frgMtr.setTargetPosition(rfPos);
+        blfMtr.setTargetPosition(lrPos);
+        brgMtr.setTargetPosition(rrPos);
+        flfMtr.setPower(speed);
+        frgMtr.setPower(speed);
+        blfMtr.setPower(speed);
+        brgMtr.setPower(speed);
+
+        // wait for move to complete
+        while (flfMtr.isBusy() && frgMtr.isBusy() &&
+                blfMtr.isBusy() && brgMtr.isBusy()) {
+
+            // Display it for the driver.
+            IO.telemetry.addLine("Turn Clockwise");
+            IO.telemetry.addData("Target", "%7d :%7d", lfPos, rfPos, lrPos, rrPos);
+            IO.telemetry.addData("Actual", "%7d :%7d", flfMtr.getCurrentPosition(),
+                    frgMtr.getCurrentPosition(), blfMtr.getCurrentPosition(),
+                    brgMtr.getCurrentPosition());
+            IO.telemetry.update();
+        }
+
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
     }
     //endregion
 }

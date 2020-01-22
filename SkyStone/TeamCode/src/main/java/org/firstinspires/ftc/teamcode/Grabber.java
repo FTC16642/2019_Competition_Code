@@ -8,54 +8,86 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 public class Grabber extends ComponentBase {
 
     //Declare objects that will be used in the program
-    Servo servo;
+    Servo claw;
+    Servo lift;
     double servoPosition;
 
     //Initialize the objects
     public Grabber (HardwareIO InputOutput) {
         super(InputOutput);
-        servo = IO.hardwareMap.servo.get("skystone");
+        claw = IO.hardwareMap.servo.get("grabclaw");
+        lift = IO.hardwareMap.servo.get("grablift");
     }
 
     //Runs when the player presses init
     public void init() {
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Initializing grabber");
-        unlock();
+        up();
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Grabber initialized");
     }
 
     //Runs repeatedly after the player presses stop
     public void loop() {
-
+        if (IO.gamePad2.a)
+            pickup();
+        else if (IO.gamePad2.x)
+            drop();
     }
 
     public void stop() {
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Stopping grabber");
-        servo = null;
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Grabber stopped");
     }
 
     //Pulls the servo up
-    public void unlock() {
+    public void drop() {
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Unlocking grabber");
-        servoPosition = 0.0;
-        servo.setPosition(servoPosition);
+        claw.setPosition(.5);
+        // sleep(5000);
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Grabber unlocked");
     }
 
     //Pulls the servo down
-    public void lock() {
+    public void pickup() {
+
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Locking grabber");
-        servoPosition = 0.45;
         IO.telemetry.clear();
-        servo.setPosition(servoPosition);
+
+        lift.setPosition(.6);
+        sleep(500);
+        claw.setPosition(1);
+        sleep(500);
+        claw.setPosition(0);
+        sleep(500);
+        claw.setPosition(1);
+        sleep(500);
+        lift.setPosition(0.2);
+        sleep(200);
+
+
         IO.telemetry.addData("Status", "Grabber locked");
+    }
+
+    public void up()
+    {
+        lift.setPosition(0.2);
+        claw.setPosition(0.5);
+
+
+    }
+
+    public final void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

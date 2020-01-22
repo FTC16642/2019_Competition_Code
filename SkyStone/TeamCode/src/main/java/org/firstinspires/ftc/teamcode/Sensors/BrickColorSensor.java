@@ -4,17 +4,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Common.ComponentBase;
-import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
 import java.util.Locale;
 
@@ -35,7 +30,7 @@ public class BrickColorSensor {
     // to amplify/attentuate the measured values.
     final double SCALE_FACTOR = 255;
 
-    View relativeLayout = null;
+    //View relativeLayout = null;
 
 
     public BrickColorSensor(HardwareMap hrdMap,Telemetry tele)
@@ -69,8 +64,8 @@ public class BrickColorSensor {
 
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
-        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
-        relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+        //int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        //relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
 
     }
@@ -100,33 +95,35 @@ public class BrickColorSensor {
         telemetry.addData("Blue ", sensorColor.blue());
         telemetry.addData("Hue", hsvValues[0]);
 
+        getDistanceValue();
+
         // change the background color to match the color detected by the RGB sensor.
         // pass a reference to the hue, saturation, and value array as an argument
         // to the HSVToColor method.
-        relativeLayout.post(new Runnable() {
+        /*relativeLayout.post(new Runnable() {
             public void run() {
                 relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
             }
-        });
+        });*/
 
         telemetry.update();
 
         return getIntFromColor(sensorColor.red(), sensorColor.green(), sensorColor.blue());
     }
 
-    public void uninitialize()
+    /*public void uninitialize()
     {
         // Set the panel back to the default color
-        relativeLayout.post(new Runnable() {
+        /*relativeLayout.post(new Runnable() {
             public void run() {
                 relativeLayout.setBackgroundColor(Color.WHITE);
             }
-        });
-    }
+        });* /
+    }*/
 
     public boolean isSkystone()
     {
-        if (sensorColor.red()< 30 && sensorColor.green() < 30)
+        if (sensorColor.red() < 20)
         {
             return true;
         }

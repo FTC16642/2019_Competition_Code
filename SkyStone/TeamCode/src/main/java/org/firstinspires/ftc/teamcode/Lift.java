@@ -43,25 +43,25 @@ public class Lift extends ComponentBase {
     public void lift ()
     {
         if (IO.gamePad2.left_trigger > 0)
-            liftMtr.setPower(IO.gamePad2.left_trigger);
+            liftMtr.setPower(IO.gamePad2.left_trigger * 1);
         else if (IO.gamePad2.right_trigger > 0)
             liftMtr.setPower(IO.gamePad2.right_trigger * -1);
     }
 
     public void grab()
     {
-    /*    if (IO.gamePad2.left_bumper == true)
-            grabSrv.setPosition(-20);
-        else if(IO.gamePad2.left_bumper == false)
-            grabSrv.setPosition(.5); */
+        if (IO.gamePad2.right_bumper == true)
+            grabSrv.setPosition(0);
+        else if(IO.gamePad2.right_bumper == false)
+            grabSrv.setPosition(1);
     }
 
     public void moveWrist()
     {
-       /* if (IO.gamePad2.right_bumper == true)
-            wristSrv.setPosition(0);
-        else if(IO.gamePad2.right_bumper == false)
-            wristSrv.setPosition(1); */
+        if (IO.gamePad2.left_bumper == true)
+            wristSrv.setPosition(.1);
+        else if(IO.gamePad2.left_bumper == false)
+            wristSrv.setPosition(1);
     }
 
 }

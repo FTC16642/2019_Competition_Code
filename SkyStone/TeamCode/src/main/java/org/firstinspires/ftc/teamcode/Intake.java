@@ -19,6 +19,8 @@ public class Intake extends ComponentBase
     public void init()
     {
         rintakeMtr = IO.hardwareMap.get(DcMotor.class, "rightIntake");
+        rintakeMtr.setDirection(DcMotor.Direction.REVERSE);
+
         lintakeMtr = IO.hardwareMap.get(DcMotor.class, "leftIntake");
         IO.telemetry.addData("Status", "Initializing Intake");
     }
