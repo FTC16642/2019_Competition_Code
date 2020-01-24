@@ -28,7 +28,10 @@
  */
 
 package org.firstinspires.ftc.teamcode;
-
+/*
+This is the driver control opmode class, which uses all the attachment classes in a single place and commands
+all the gamepad control.
+* */
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -48,6 +51,12 @@ import org.firstinspires.ftc.teamcode.Common.HardwareIO;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 
 @TeleOp(name="Orchestrator", group="Iterative Opmode")
 public class Orchestrator extends OpMode

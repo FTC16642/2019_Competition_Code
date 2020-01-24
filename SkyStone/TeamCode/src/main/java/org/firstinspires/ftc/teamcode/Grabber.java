@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode;
+/*
+* Grabber handles the side attachment which helps in picking up the stone. This class is mostly
+* used in autonomous and driver control period.
+* */
 
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -37,8 +41,7 @@ public class Grabber extends ComponentBase {
     }
 
     public void stop() {
-        IO.telemetry.clear();
-        IO.telemetry.addData("Status", "Stopping grabber");
+
         IO.telemetry.clear();
         IO.telemetry.addData("Status", "Grabber stopped");
     }
@@ -62,6 +65,9 @@ public class Grabber extends ComponentBase {
 
         lift.setPosition(.6);
         sleep(500);
+        //try to open the claw and grab twice, because sometimes the robot is not in the perfect
+        // position to pickup the stone. trying to grab twice brought the stone closer and then
+        // picked it.
         claw.setPosition(1);
         sleep(500);
         claw.setPosition(0);

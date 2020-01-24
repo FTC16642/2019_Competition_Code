@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode;
+/*
+* Lift handles the side attachment which is used to lift the stone and deliver/place it on the
+* platform. This is used during, Autonomous, Driver control, and Endgame periods.
+* */
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -43,24 +47,24 @@ public class Lift extends ComponentBase {
     public void lift ()
     {
         if (IO.gamePad2.left_trigger > 0)
-            liftMtr.setPower(IO.gamePad2.left_trigger * 1);
+            liftMtr.setPower(IO.gamePad2.left_trigger * .8);
         else if (IO.gamePad2.right_trigger > 0)
-            liftMtr.setPower(IO.gamePad2.right_trigger * -1);
+            liftMtr.setPower(IO.gamePad2.right_trigger * -.8);
     }
 
     public void grab()
     {
-        if (IO.gamePad2.right_bumper == true)
+        if (IO.gamePad2.left_bumper == true)
             grabSrv.setPosition(0);
-        else if(IO.gamePad2.right_bumper == false)
+        else if(IO.gamePad2.left_bumper == false)
             grabSrv.setPosition(1);
     }
 
     public void moveWrist()
     {
-        if (IO.gamePad2.left_bumper == true)
+        if (IO.gamePad2.right_bumper == true)
             wristSrv.setPosition(.1);
-        else if(IO.gamePad2.left_bumper == false)
+        else if(IO.gamePad2.right_bumper == false)
             wristSrv.setPosition(1);
     }
 

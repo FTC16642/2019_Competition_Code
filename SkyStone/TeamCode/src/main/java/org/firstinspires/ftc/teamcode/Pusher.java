@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
-
+/*
+* Pusher handles a side attachment which helps push and secure the block in the robot. This is used
+* in Autonomous, Driver control, and Endgame periods.
+* */
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
@@ -11,8 +14,6 @@ public class Pusher extends ComponentBase {
     // Declare objects that will be used in the code
     Servo servo;
     double servoPosition;
-
-
 
     // Constructor class to initialize the variables
     public Pusher(HardwareIO InputOutput ){
@@ -65,6 +66,10 @@ public class Pusher extends ComponentBase {
         IO.telemetry.addData("servoPosition", servoPosition);
         IO.telemetry.addData("joyStickPosition", IO.gamePad2.left_stick_y);
     }
-
+    public void stop() {
+        IO.telemetry.addData("Status", "Stopping pusher");
+        servo = null;
+        IO.telemetry.addData("Status", "Stopped pusher");
+    }
 
 }

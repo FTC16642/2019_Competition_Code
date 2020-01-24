@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Sensors;
-
+/*
+* BrickColorSensor handles a sensor under the robot which identifies color in specific skystones.
+* This class is used in Autonomous and Driver control periods.
+* */
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
@@ -123,7 +126,7 @@ public class BrickColorSensor {
 
     public boolean isSkystone()
     {
-        if (sensorColor.red() < 20)
+        if (sensorColor.red() < 30)
         {
             return true;
         }

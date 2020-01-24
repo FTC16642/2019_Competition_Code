@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Sensors;
-
+/*
+* DistSensor handles the sensor which measures the distance, it helps the robot know its boundaries
+* and which ways to move. This is used in Autonomous and Driver control periods.
+* */
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;

@@ -286,5 +286,14 @@ public class MecanumDrive extends ComponentBase
         blfMtr.setPower(0);
         brgMtr.setPower(0);
     }
+
+    public void stop()
+    {
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
+    }
     //endregion
 }

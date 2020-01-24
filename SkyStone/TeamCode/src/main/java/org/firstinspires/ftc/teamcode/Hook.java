@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode;
+/*
+* Hook handles the back attachment which is used in moving the platform when necessary. This class
+* is used in both Autonomous and Endgame periods.
+* */
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

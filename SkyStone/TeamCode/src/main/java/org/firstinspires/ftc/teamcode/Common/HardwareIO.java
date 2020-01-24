@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode.Common;
+/**
+ * HardwareIO handles all the hardware parts in the robot. It is shared across all the feature
+ * classes derived ComponentBase.
+ */
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
