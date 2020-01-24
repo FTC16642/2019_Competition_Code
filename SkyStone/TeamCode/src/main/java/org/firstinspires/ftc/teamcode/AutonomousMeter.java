@@ -71,7 +71,5 @@ public class AutonomousMeter extends LinearOpMode {
             backDistSensor.getDistance();
             sleep(1000);
         }
-
-        colorSensor.uninitialize();
     }
 }
