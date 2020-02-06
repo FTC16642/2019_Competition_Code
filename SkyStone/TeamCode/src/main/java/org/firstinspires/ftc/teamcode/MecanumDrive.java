@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.Common.ComponentBase;
 import org.firstinspires.ftc.teamcode.Common.HardwareIO;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 public class MecanumDrive extends ComponentBase
@@ -52,6 +51,7 @@ public class MecanumDrive extends ComponentBase
         brgMtr.setDirection(DcMotor.Direction.FORWARD);
         blfMtr.setDirection(DcMotor.Direction.REVERSE);
     }
+
 
     public void init()
     {
@@ -149,6 +149,50 @@ public class MecanumDrive extends ComponentBase
         brgMtr.setPower(0);
     }
 
+    public void moveForwardRaw(int howMuch, double speed) {
+        // howMuch is in inches. A negative howMuch moves backward.
+
+        // fetch motor positions
+        lfPos = flfMtr.getCurrentPosition();
+        rfPos = frgMtr.getCurrentPosition();
+        lrPos = blfMtr.getCurrentPosition();
+        rrPos = brgMtr.getCurrentPosition();
+
+        // calculate new targets
+        lfPos += howMuch;
+        rfPos += howMuch;
+        lrPos += howMuch;
+        rrPos += howMuch;
+
+        // move robot to new position
+        flfMtr.setTargetPosition(lfPos);
+        frgMtr.setTargetPosition(rfPos);
+        blfMtr.setTargetPosition(lrPos);
+        brgMtr.setTargetPosition(rrPos);
+        flfMtr.setPower(speed);
+        frgMtr.setPower(speed);
+        blfMtr.setPower(speed);
+        brgMtr.setPower(speed);
+
+        // wait for move to complete
+        while (flfMtr.isBusy() && frgMtr.isBusy() &&
+                blfMtr.isBusy() && brgMtr.isBusy()) {
+
+            // Display it for the driver.
+            IO.telemetry.addLine("Move Foward");
+            IO.telemetry.addData("Target", "%7d :%7d", lfPos, rfPos, lrPos, rrPos);
+            IO.telemetry.addData("Actual", "%7d :%7d", flfMtr.getCurrentPosition(),
+                    frgMtr.getCurrentPosition(), blfMtr.getCurrentPosition(),
+                    brgMtr.getCurrentPosition());
+            IO.telemetry.update();
+        }
+
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
+    }
     public void moveForward(int howMuch, double speed) {
         // howMuch is in inches. A negative howMuch moves backward.
 
@@ -193,7 +237,53 @@ public class MecanumDrive extends ComponentBase
         blfMtr.setPower(0);
         brgMtr.setPower(0);
     }
+    public void moveRightRaw(int howMuch, double speed) {
+        // howMuch is in inches. A negative howMuch moves backward.
 
+        // fetch motor positions
+        lfPos = flfMtr.getCurrentPosition();
+        rfPos = frgMtr.getCurrentPosition();
+        lrPos = blfMtr.getCurrentPosition();
+        rrPos = brgMtr.getCurrentPosition();
+
+        // calculate new targets
+        lfPos += howMuch ;
+        rfPos -= howMuch ;
+        lrPos -= howMuch ;
+        rrPos += howMuch ;
+
+        // move robot to new position
+
+        flfMtr.setTargetPosition(lfPos);
+        frgMtr.setTargetPosition(rfPos);
+        blfMtr.setTargetPosition(lrPos);
+        brgMtr.setTargetPosition(rrPos);
+
+        flfMtr.setPower(speed);
+        frgMtr.setPower(speed);
+        blfMtr.setPower(speed);
+        brgMtr.setPower(speed);
+
+        // wait for move to complete
+        while (flfMtr.isBusy() && frgMtr.isBusy() &&
+                blfMtr.isBusy() && brgMtr.isBusy()) {
+
+            // Display it for the driver.
+            IO.telemetry.addLine("Strafe Right");
+            IO.telemetry.addData("Target", "%7d :%7d", lfPos, lrPos, rrPos, rrPos);
+            IO.telemetry.addData("Actual", "%7d :%7d", flfMtr.getCurrentPosition(),
+                    frgMtr.getCurrentPosition(), blfMtr.getCurrentPosition(),
+                    brgMtr.getCurrentPosition());
+            IO.telemetry.update();
+        }
+
+        // Stop all motion;
+        flfMtr.setPower(0);
+        frgMtr.setPower(0);
+        blfMtr.setPower(0);
+        brgMtr.setPower(0);
+
+    }
     public void moveRight(int howMuch, double speed) {
         // howMuch is in inches. A negative howMuch moves backward.
 
@@ -286,7 +376,7 @@ public class MecanumDrive extends ComponentBase
         blfMtr.setPower(0);
         brgMtr.setPower(0);
     }
-
+    //endregion
     public void stop()
     {
         // Stop all motion;
@@ -295,5 +385,4 @@ public class MecanumDrive extends ComponentBase
         blfMtr.setPower(0);
         brgMtr.setPower(0);
     }
-    //endregion
 }

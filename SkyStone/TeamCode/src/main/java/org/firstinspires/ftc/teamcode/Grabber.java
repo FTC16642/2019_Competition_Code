@@ -63,7 +63,7 @@ public class Grabber extends ComponentBase {
         IO.telemetry.addData("Status", "Locking grabber");
         IO.telemetry.clear();
 
-        lift.setPosition(.6);
+        lift.setPosition(.5);
         sleep(500);
         //try to open the claw and grab twice, because sometimes the robot is not in the perfect
         // position to pickup the stone. trying to grab twice brought the stone closer and then

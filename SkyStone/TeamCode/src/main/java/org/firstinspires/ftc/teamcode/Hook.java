@@ -55,7 +55,7 @@ public class Hook extends ComponentBase {
         {
 
             IO.telemetry.addData("Status", "Raising hook");
-            servoPosition = 0.4;
+            servoPosition = 0.6;
             servo.setPosition(servoPosition);
             IO.telemetry.addData("Status", "Hook raised");
         }
@@ -65,7 +65,7 @@ public class Hook extends ComponentBase {
     public void pullDown (){
         {
             IO.telemetry.addData("Status", "Lowering hook");
-            servoPosition = 0.0;
+            servoPosition = 0.1;
             servo.setPosition(servoPosition);
             IO.telemetry.addData("Status", "Hook lowered");
         }

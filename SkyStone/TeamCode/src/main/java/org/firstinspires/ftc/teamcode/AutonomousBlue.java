@@ -67,76 +67,70 @@ public class AutonomousBlue extends LinearOpMode {
             //move forward to align to the top stone.
             drive.moveForward(-10 , drive.medium);
             //straf to the right to go near the stone.
-            drive.moveRight(13, drive.medium);
+            drive.moveRightRaw(1240, drive.medium);
             //since the starf doesn't move in a straight line due tow eihgt,
             //we move front agian to align straight again.
-            drive.moveForward(-5 , drive.medium);
-            // move back a little to get the color sensor in the middle of second stone.
-            drive.moveForward(1, drive.medium);
-
-            //sleep(2000);
+            drive.moveForward(-6 , drive.medium);
 
             boolean bFound = false;
 
-            //if the 2nd stone is NOT a skystone
-            moveNext(2);
+            // move back a little to get the color sensor in the middle
+            //of second stone.
+            moveNext(80);
 
-            //if the 3rd stone is NOT a skystone
-            moveNext(3);
+            //if the above 2nd stone is NOT a skystone
+            moveNext(200);
 
-            //if the 4th stone is NOT a skystone
-            moveNext(2);
+            //if the above 3rd stone is NOT a skystone
+            moveNext(260);
 
-            //if the 5th stone is NOT a skystone
-            moveNext(3);
+            //if the above 4th stone is NOT a skystone
+            moveNext(170);
+
+            //if the above 5th stone is NOT a skystone
+            moveNext(240);
             // if none of the stones are skystone grab the last.
 
 
-            /*int blockCount=2;
-            while (!colorSensor.isSkystone())
-            {
-                drive.moveForward(2, drive.medium);
-                sleep(2000);
-                blockCount++;
-                if (blockCount>7)
-                    break;
+            sleep(100);
 
-            }*/
-
-            //if the robot is too close to the stone
-            //move away a litte to pick the stone correctly
-            if(sideDistSensor.getDistance() > 800 )
+            while(colorSensor.getDistanceValue() < 13 )
             {
-                drive.moveRight(-1, drive.medium);
+                drive.moveRightRaw(-40, drive.medium);
+                sleep(200);
             }
+
+            if(colorSensor.getDistanceValue() > 23 )
+            {
+                drive.moveRightRaw(40, drive.medium);
+                sleep(100);
+            }
+
             //Pick the stone
             grabber.pickup();
             //Move to the right to not bump into the bridge holder
-            drive.moveRight(-3, drive.medium);
+            drive.moveRight(-4, drive.medium);
             // Turn a little to adjust the strafing issue
             drive.turnClockwise(2, drive.medium);
             // Move forward to the other side to a certain position
             //until the back distance sensor fetches a value
-            drive.moveForward(35, drive.medium);
+            drive.moveForward(30, drive.medium);
 
             //move closer to the back wall
-            while( backDistSensor.getDistance() > 400 )
+            while( backDistSensor.getDistance() > 600 )
             {
-                // corrects strafing
-                if(sideDistSensor.getDistance() > 800 )
-                {
-                    drive.moveRight(-1, drive.medium);
-                }
                 drive.moveForward(4, drive.medium);
             }
 
             //moves towards the foundation
-            while(sideDistSensor.getDistance() < 700 )
+            while(sideDistSensor.getDistance() < 900 )
             {
-                drive.moveRight(2, drive.medium);
+                drive.moveRightRaw(100, drive.medium);
             }
             //drops the brick
             grabber.drop();
+
+            drive.moveForwardRaw(260, drive.medium);
 
             //turns around completely
             drive.turnClockwise(-25, drive.medium);
@@ -148,7 +142,7 @@ public class AutonomousBlue extends LinearOpMode {
             //drive.turnClockwise(25, drive.medium);
             //drive.moveForward(10 , drive.medium);
             hook.pullUp();
-            drive.moveRight(25 , drive.medium);
+            drive.moveRight(27, drive.medium);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -170,10 +164,15 @@ public class AutonomousBlue extends LinearOpMode {
 
     private void moveNext (int moveCnt)
     {
+        if(bFoundSky)
+        {
+            return;
+        }
+
         if (!colorSensor.isSkystone())
         {
             // move to third brick.
-            drive.moveForward(moveCnt, drive.medium);
+            drive.moveForwardRaw(moveCnt, drive.medium);
             sleep(500);
         }
         else
