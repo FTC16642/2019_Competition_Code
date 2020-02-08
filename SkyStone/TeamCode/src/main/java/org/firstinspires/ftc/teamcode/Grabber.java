@@ -84,7 +84,7 @@ public class Grabber extends ComponentBase {
     public void up()
     {
         lift.setPosition(0.2);
-        claw.setPosition(0.5);
+        claw.setPosition(0.6);
 
 
     }
